@@ -1,0 +1,19 @@
+World BANK - Transaction Notification
+
+Dear {{ transaction.receiver_name }},
+
+Amount: ${{ amount }}
+
+A transaction has been initiated in your favor. Below are the details:
+
+Transaction Reference: {{ transaction.transaction_ref }}
+Sender Name: {{ transaction.sender_name }}
+Sender Country: {{ transaction.sender_country }}
+Receiver Name: {{ transaction.receiver_name }}
+Receiver Account: {{ transaction.receiver_account }}
+Date: {{ date }}
+Time: {{ time }}
+
+If you have any questions, please contact our 24-hour Contact Centre.
+
+Thank you for choosing World Bank.

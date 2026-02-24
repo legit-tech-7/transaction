@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% block title %}New Deposit - World Bank{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-money-bill-transfer"></i>New Deposit Transaction
+            </div>
+            <div class="card-body p-4">
+                <form method="post" novalidate id="depositForm">
+                    {% csrf_token %}
+                    
+                    <!-- Sender Information -->
+                    <h5 class="mb-3" style="color: #1a237e; border-bottom: 2px solid #1a237e; padding-bottom: 10px;">
+                        <i class="fas fa-user me-2"></i>Sender Information
+                    </h5>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Full Name <span class="required">*</span>
+                            </label>
+                            {{ form.sender_name }}
+                            {% if form.sender_name.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.sender_name.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Account Number <span class="required">*</span>
+                            </label>
+                            {{ form.sender_account }}
+                            {% if form.sender_account.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.sender_account.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Country <span class="required">*</span>
+                            </label>
+                            {{ form.sender_country }}
+                            {% if form.sender_country.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.sender_country.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Receiver Information -->
+                    <h5 class="mb-3 mt-4" style="color: #1a237e; border-bottom: 2px solid #1a237e; padding-bottom: 10px;">
+                        <i class="fas fa-user-friends me-2"></i>Receiver Information
+                    </h5>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Full Name <span class="required">*</span>
+                            </label>
+                            {{ form.receiver_name }}
+                            {% if form.receiver_name.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.receiver_name.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Account Number <span class="required">*</span>
+                            </label>
+                            {{ form.receiver_account }}
+                            {% if form.receiver_account.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.receiver_account.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Country <span class="required">*</span>
+                            </label>
+                            {{ form.receiver_country }}
+                            {% if form.receiver_country.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.receiver_country.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Email Address <span class="required">*</span>
+                            </label>
+                            {{ form.receiver_email }}
+                            {% if form.receiver_email.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.receiver_email.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                          <div class="col-md-6">
+                            <label class="form-label">
+                                bank <span class="required">*</span>
+                            </label>
+                            {{ form.receiver_bank }}
+                            {% if form.receiver_bank.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.receiver_bank.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Transaction Details -->
+                    <h5 class="mb-3 mt-4" style="color: #1a237e; border-bottom: 2px solid #1a237e; padding-bottom: 10px;">
+                        <i class="fas fa-coins me-2"></i>Transaction Details
+                    </h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Amount ($) <span class="required">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light">$</span>
+                                {{ form.amount }}
+                            </div>
+                            {% if form.amount.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ form.amount.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Security Notice -->
+                    <div class="alert alert-info mt-4 d-flex align-items-center">
+                        <i class="fas fa-shield-alt fa-2x me-3"></i>
+                        <div>
+                            <strong>Secure Transaction</strong><br>
+                            <small>This transaction is encrypted and secure. All information is protected.</small>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-paper-plane me-2"></i>Process Deposit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Client-side validation for account numbers
+    document.getElementById('id_sender_account').addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    
+    document.getElementById('id_receiver_account').addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    
+    // Prevent negative amounts
+    document.getElementById('id_amount').addEventListener('keydown', function(e) {
+        if (e.key === '-' || e.key === 'e') {
+            e.preventDefault();
+        }
+    });
+</script>
+{% endblock %}

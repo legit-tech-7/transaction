@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}Transaction Receipt - World Bank{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-receipt"></i>Transaction Receipt
+            </div>
+            <div class="card-body p-4">
+                <!-- Bank Header -->
+                <div class="text-center mb-4">
+                    <h2 style="color: #1a237e; font-weight: bold;">World BANK</h2>
+                    <p class="text-muted">Generated from WorldMore on {% now "d/m/y H:i:s" %}</p>
+                </div>
+                
+                <!-- Receipt Content - Matching the image format -->
+                <div class="receipt-content">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td style="width: 40%; font-weight: bold;">Transaction Amount</td>
+                            <td style="font-weight: bold; color: #28a745;">${{ transaction.amount|floatformat:2|intcomma }}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;">Transaction Type</td>
+                            <td>INTER-BANK</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;">Transaction Date</td>
+                            <td>{{ transaction.created_at|date:"Y-m-d H:i:s" }}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;">Sender</td>
+                            <td>{{ transaction.sender_name|upper }}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;">Beneficiary</td>
+                            <td>
+                                {{ transaction.receiver_name|upper }}<br>
+                                {{ transaction.receiver_account }}<br>
+                                {{ transaction.receiver_bank }}
+
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;">Remark</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;">Transaction Reference</td>
+                            <td style="color: #1a237e;">{{ transaction.transaction_ref }}</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;">Transaction Status</td>
+                            <td>
+                                <span class="badge badge-success">Transfer Request Successful</span>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <!-- Footer Message -->
+                    <div class="alert alert-secondary mt-4" style="background: #f8f9fa; border-left: 4px solid #1a237e;">
+                        <small>
+                            <i class="fas fa-info-circle me-2" style="color: #1a237e;"></i>
+                            If you have any questions or would like more information, please call our 24-hour Contact Centre 
+                            on 0700CallWorld, 0700 3000000, +234 1-2712005-7, +234 1-2802500 or send an email to 
+                            contactcenter@Worldbankplc.com Thank you for choosing World Bank.
+                        </small>
+                    </div>
+                    
+                    <p class="text-center text-muted small mb-4">
+                        Banking with World: Branch | ATM | Online | Mobile | Contact centre
+                    </p>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="d-flex gap-2 justify-content-center mt-4">
+                    <button onclick="window.print()" class="btn btn-outline-primary">
+                        <i class="fas fa-print me-2"></i>Print Receipt
+                    </button>
+                    <a href="{% url 'deposit_form' %}" class="btn btn-primary">
+                        <i class="fas fa-plus-circle me-2"></i>New Transaction
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    @media print {
+        .navbar, .btn, .alert-secondary, .card-header {
+            display: none !important;
+        }
+        .card {
+            box-shadow: none !important;
+            border: 1px solid #ddd !important;
+        }
+        body {
+            background: white !important;
+        }
+        .container {
+            margin: 0 !important;
+            padding: 20px !important;
+        }
+    }
+    
+    .table td {
+        border: none !important;
+        padding: 12px 0 !important;
+    }
+    
+    .receipt-content {
+        font-family: 'Courier New', monospace;
+    }
+</style>
+{% endblock %}
